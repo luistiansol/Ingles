@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ff6b81">
+    <title>Salon English App</title>
+    <style>
+        :root { --primary: #ff6b81; --bg: #f8f9fa; --card: #ffffff; --text: #2d3436; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); margin: 0; display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; }
+        .app-container { width: 100%; max-width: 420px; background-color: var(--card); min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; overflow-x: hidden; }
+        .header { background: var(--primary); color: white; padding: 25px 20px; text-align: center; font-size: 24px; font-weight: bold; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 6px rgba(255, 107, 129, 0.2); }
+        .screen { display: none; padding: 20px; animation: fadeIn 0.3s ease-in-out; }
+        .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+        .level-card { background: var(--card); border: 2px solid #f1f2f6; border-radius: 15px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .level-card:active { transform: scale(0.98); border-color: var(--primary); }
+        .level-icon { font-size: 30px; margin-right: 15px; }
+        .level-info h3 { margin: 0 0 5px 0; color: var(--text); font-size: 18px; }
+        .level-info p { margin: 0; color: #636e72; font-size: 14px; }
+        .vocab-item { background: #f1f2f6; border-radius: 12px; padding: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .word-en { font-weight: bold; color: var(--text); font-size: 18px; margin-bottom: 4px; }
+        .word-es { color: #636e72; font-size: 14px; }
+        .play-btn { background: var(--primary); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(255, 107, 129, 0.4); }
+        .play-btn:active { transform: scale(0.9); }
+        .back-btn { background: transparent; border: none; color: var(--primary); font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; margin-bottom: 20px; padding: 0; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">💅 Salon English</div>
+
+        <div id="home" class="screen active">
+            <div class="level-card" onclick="nav('level1')">
+                <div style="display: flex; align-items: center;">
+                    <div class="level-icon">👋</div>
+                    <div class="level-info">
+                        <h3>Nivel 1: Bienvenida</h3>
+                        <p>Saludos y primeras frases</p>
+                    </div>
+                </div>
+                <div style="color: #ccc; font-weight: bold;">></div>
+            </div>
+
+            <div class="level-card" onclick="nav('level2')">
+                <div style="display: flex; align-items: center;">
+                    <div class="level-icon">✂️</div>
+                    <div class="level-info">
+                        <h3>Nivel 2: Herramientas</h3>
+                        <p>Vocabulario de tu estación</p>
+                    </div>
+                </div>
+                <div style="color: #ccc; font-weight: bold;">></div>
+            </div>
+
+            <div class="level-card" onclick="nav('level3')">
+                <div style="display: flex; align-items: center;">
+                    <div class="level-icon">🎨</div>
+                    <div class="level-info">
+                        <h3>Nivel 3: Servicios</h3>
+                        <p>Manicure, pedicure y estilos</p>
+                    </div>
+                </div>
+                <div style="color: #ccc; font-weight: bold;">></div>
+            </div>
+        </div>
+
+        <div id="level1" class="screen">
+            <button class="back-btn" onclick="nav('home')">‹ Volver al menú</button>
+            <div id="content-level1"></div>
+        </div>
+        <div id="level2" class="screen">
+            <button class="back-btn" onclick="nav('home')">‹ Volver al menú</button>
+            <div id="content-level2"></div>
+        </div>
+        <div id="level3" class="screen">
+            <button class="back-btn" onclick="nav('home')">‹ Volver al menú</button>
+            <div id="content-level3"></div>
+        </div>
+    </div>
+
+    <script>
+        const data = {
+            level1: [
+                {en: "Hello, welcome to the salon!", es: "¡Hola, bienvenida al salón!"},
+                {en: "Do you have an appointment?", es: "¿Tienes una cita?"},
+                {en: "Please, have a seat right here.", es: "Por favor, toma asiento aquí."},
+                {en: "Would you like some water?", es: "¿Te gustaría un poco de agua?"}
+            ],
+            level2: [
+                {en: "Nail clipper", es: "Cortaúñas"},
+                {en: "Nail file", es: "Lima de uñas"},
+                {en: "Cuticle pusher", es: "Empujador de cutícula"},
+                {en: "UV Lamp", es: "Lámpara UV"},
+                {en: "Buffer", es: "Pulidor de uñas"}
+            ],
+            level3: [
+                {en: "Acrylic nails", es: "Uñas acrílicas"},
+                {en: "Gel polish", es: "Esmalte en gel"},
+                {en: "What shape do you like?", es: "¿Qué forma de uña te gusta?"},
+                {en: "Square or almond?", es: "¿Cuadradas o almendradas?"},
+                {en: "Let your hands relax.", es: "Deja tus manos relajadas."}
+            ]
+        };
+
+        function renderLevels() {
+            ['level1', 'level2', 'level3'].forEach(level => {
+                const container = document.getElementById('content-' + level);
+                data[level].forEach(item => {
+                    container.innerHTML += `
+                        <div class="vocab-item">
+                            <div>
+                                <div class="word-en">${item.en}</div>
+                                <div class="word-es">${item.es}</div>
+                            </div>
+                            <button class="play-btn" onclick="speak('${item.en.replace(/'/g, "\\'")}')">🔊</button>
+                        </div>
+                    `;
+                });
+            });
+        }
+
+        function nav(target) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(target).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.85; // Velocidad ajustada para aprender
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Tu dispositivo no soporta la lectura en voz alta.");
+            }
+        }
+
+        renderLevels();
+    </script>
+</body>
+</html>
